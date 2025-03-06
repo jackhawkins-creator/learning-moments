@@ -1,21 +1,22 @@
-import { useState } from "react";
-import { HomePage } from './components/HomePage';
-import { PostDetailsPage } from './components/PostDetailsPage';
+import { Route, Routes } from "react-router-dom";
+import { Login } from "./components/auth/Login";
+import { Register } from "./components/auth/Register";
+import { Authorized } from "./views/Authorized";
+import { ApplicationViews } from "./views/ApplicationViews";
 
 export const App = () => {
-  const [selectedPost, setSelectedPost] = useState(null);
-
-  const handlePostClick = (post) => {
-    setSelectedPost(post); // Set the clicked post as the selected post
-  };
-
   return (
-    <div>
-      {selectedPost ? (
-        <PostDetailsPage post={selectedPost} />
-      ) : (
-        <HomePage onPostClick={handlePostClick} />
-      )}
-    </div>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="*"
+        element={
+          <Authorized>
+            <ApplicationViews />
+          </Authorized>
+        }
+      />
+    </Routes>
   );
 };
